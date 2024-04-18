@@ -94,7 +94,6 @@ def get_channel_info(channel_id, api_key):
         maxResults=200
       )
       playlist_response = playlist_request.execute()
-      print(playlist_response)
       if 'items' in playlist_response:
         for playlist_item in playlist_response['items']:
           playlist_info.append({
@@ -119,7 +118,6 @@ def get_channel_info(channel_id, api_key):
       video_response = video_request.execute()"""
     
       video_response = video_request.execute()    
-      print(video_response)
       # Accumulate comments for all videos
       comments_info = []    
       if 'items' in video_response:
@@ -171,10 +169,10 @@ def get_channel_info(channel_id, api_key):
               'favorite_count': video_statistics.get('favoriteCount', 0),
               'comment_count': video_statistics.get('commentCount', 0),
               'duration': format_duration(video_details_response['items'][0]['contentDetails']['duration']),
-              #print("video_details_response:", video_details_response)  # Check the structure of video_details_response
+              #print("video_details_response:", video_details_response)  
               'thumbnail': video_data['thumbnails']['default']['url'],
               'caption_status': video_details_response['items'][0]['contentDetails'].get('caption', 'Not available')
-              #print("video_details_response:", video_details_response)  # Check the structure of video_details_response
+            
             })     
       return channel_info, playlist_info, video_info, comments_info
 
@@ -250,7 +248,6 @@ def display_store_data():
                             "VALUES (%s, %s, %s, %s, %s, %s)")
             channel_data = (channel_info['channel_id'], channel_info['channel_name'], channel_info['channel_views'],
                         channel_info['channel_description'], channel_info['channel_status'], channel_info['channel_type'])
-            #print("Inserting channel data:", channel_data)
             cursor.execute(channel_insert_query, channel_data)
             cnx.commit()
 
@@ -261,7 +258,6 @@ def display_store_data():
                                "VALUES (%s, %s, %s)")
               # Access playlist information using dictionary-style syntax
               playlist_data = (playlist['playlist_id'], channel_id, playlist['playlist_name'])
-              print("Inserting playlist data:", playlist_data)
               cursor.execute(playlist_insert_query, playlist_data)
               cnx.commit()
 
@@ -276,9 +272,7 @@ def display_store_data():
                      video['published_date'], video['view_count'], video['like_count'], video['dislike_count'],
                      video['favorite_count'], video['comment_count'], video['duration'], video['thumbnail'],
                      video['caption_status'])
-             
-              #print("Inserting video data:", video_data)
-                
+
               try:
                   cursor.execute(video_insert_query, video_data)
                   cnx.commit()
@@ -337,7 +331,7 @@ def main():
                                "VALUES (%s, %s, %s)")
               # Access playlist information using dictionary-style syntax
               playlist_data = (playlist['playlist_id'], channel_id, playlist['playlist_name'])
-              print("Inserting playlist data:", playlist_data)
+              #print("Inserting playlist data:", playlist_data)
               cursor.execute(playlist_insert_query, playlist_data)
               cnx.commit()
 
