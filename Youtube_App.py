@@ -3,8 +3,6 @@ import streamlit as st
 import pandas as pd
 # Import SQLAlchemy for database interaction
 from sqlalchemy import create_engine, text
-import matplotlib.pyplot as plt
-import subprocess 
 
 # Define function to query data from the database
 def query_data(sql_query):
